@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  app:
+    image: studing-app
+    container_name: studing-app
+    ports:
+      - "3030:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+    networks:
+      - studing-app
+
+  postgres:
+    image: postgres:13
+   # container_name: postgres
+    environment:
+      POSTGRES_DB: main
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # ports:
+    #   - "5432:5432"
+    networks:
+      - studing-app
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: SuperSecret
+    ports:
+      - "5051:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - studing-app
+
+networks:
+  studing-app:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
