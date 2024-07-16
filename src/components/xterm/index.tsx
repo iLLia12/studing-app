@@ -14,6 +14,9 @@ function Xterminal() {
         },
       });
       terminal.open(term);
+      terminal.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $");
+      terminal.write("\n");
+      terminal.write("\r");
       terminal.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
       return () => {
         terminal.dispose();
