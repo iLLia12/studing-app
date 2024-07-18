@@ -10,7 +10,7 @@ function Xterminal() {
     if (term) {
       const terminal = new Terminal({
         theme: {
-          background: "",
+          background: "#1e1e1e",
         },
       });
       terminal.open(term);
