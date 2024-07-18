@@ -13,21 +13,17 @@ export default function Home() {
     console.log("preSize", preSize);
   }
 
-  const handleKeyDown = (e: any) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === "s") {
-      e.preventDefault();
-      //@ts-ignore
-      console.log("Execute...: ", editorRef.current?.getValue());
-    }
-  };
+  function handleOnExecute(code: string) {
+    console.log("The code is being executed: ", code);
+  }
 
   return (
-    <div>
-      <div className="w-full flex">
+    <div className="min-h-screen">
+      <div className="w-full flex h-[calc(100vh-50px)]">
         <div className="bg-white min-w-28">
           <button>Langs</button>
         </div>
-        <div className="w-full" onKeyDown={handleKeyDown}>
+        <div className="w-full">
           <Split
             onDragEnd={handleOnChange}
             style={{
@@ -38,7 +34,10 @@ export default function Home() {
             }}
           >
             <div style={{ flex: 1 }} className="bg-black">
-              <MonacoEditor lang={ProgrammingLanguageOptions.JAVASCRIPT} />
+              <MonacoEditor
+                onExecute={handleOnExecute}
+                lang={ProgrammingLanguageOptions.JAVASCRIPT}
+              />
             </div>
             <div style={{ width: "30%" }} className="bg-vs-dark">
               <Xterm />
@@ -46,7 +45,12 @@ export default function Home() {
           </Split>
         </div>
       </div>
-      <div className="bg-slate-400">FOOTER</div>
+      <div className="fixed w-full h-20 ">
+        <div className="w-full flex justify-center h-full">
+          <button className="bg-slate-400 text-center m-1">Add lang</button>
+          <button className="bg-slate-400 text-center m-1">Drawing</button>
+        </div>
+      </div>
     </div>
   );
 }
