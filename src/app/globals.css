@@ -5,6 +5,7 @@
 :root {
   --vs-dark-bg: #1e1e1e;
   --vs-dark-bg-sec: #2a2a2a;
+  --vs-dark-bg-thr: #202020;
 }
 
 .dark-bg {
@@ -13,4 +14,8 @@
 
 .dark-bg-sec {
   background: var(--vs-dark-bg-sec);
+}
+
+.dark-bg-normal {
+  background: var(--vs-dark-bg-thr);
 }
