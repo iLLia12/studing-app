@@ -7,7 +7,7 @@ import FooterComponent from "../components/footer";
 import GolangIcon from "../components/svg/golang/icon-2.svg";
 import PythonIcon from "../components/svg/python/icon-3.svg";
 import JavaScriptIcon from "../components/svg/js/icon-1.svg";
-import PhpIcon from "../components/svg/php/icon-1.svg";
+import JavaIcon from "../components/svg/java/icon-1.svg";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -32,7 +32,7 @@ export default function Home() {
       <div className={`w-full flex h-[calc(100vh-50px)]`}>
         <div className="min-w-20 dark-bg-sec">
           <div className="w-full grid grid-rows-12 h-full vs-dark-bg pt-1">
-            <button className="dark-bg-normal text-center rounded m-1 flex justify-center items-center transition ease-in-out duration-200 hover:shadow-stone-600 shadow-md">
+            <button className="dark-bg-normal text-center rounded m-1 flex justify-center items-center transition ease-in-out duration-200 shadow-stone-700 shadow-inner">
               <Image
                 priority
                 src={GolangIcon}
@@ -41,7 +41,7 @@ export default function Home() {
                 alt="Golang"
               />
             </button>
-            <button className="dark-bg-normal text-center rounded m-1 flex justify-center items-center transition ease-in-out duration-200 hover:shadow-stone-600 shadow-md">
+            <button className="dark-bg-normal text-center rounded m-1 flex justify-center items-center transition ease-in-out duration-200 shadow-stone-700 shadow-inner">
               <Image
                 priority
                 src={PythonIcon}
@@ -50,7 +50,7 @@ export default function Home() {
                 alt="Python"
               />
             </button>
-            <button className="dark-bg-normal text-center m-1 rounded flex justify-center items-center transition ease-in-out duration-200 hover:shadow-stone-600 shadow-md">
+            <button className="dark-bg-normal text-center m-1 rounded flex justify-center items-center transition ease-in-out duration-200 shadow-stone-700 shadow-inner">
               <Image
                 priority
                 src={JavaScriptIcon}
@@ -59,8 +59,14 @@ export default function Home() {
                 alt="Javascript"
               />
             </button>
-            <button className="dark-bg-normal text-center m-1 rounded flex justify-center items-center transition ease-in-out duration-200 hover:shadow-stone-600 shadow-md">
-              <Image priority src={PhpIcon} height={33} width={33} alt="PHP" />
+            <button className="dark-bg-normal text-center m-1 rounded flex justify-center items-center transition ease-in-out duration-200 shadow-stone-700 shadow-inner">
+              <Image
+                priority
+                src={JavaIcon}
+                height={30}
+                width={30}
+                alt="Java"
+              />
             </button>
           </div>
         </div>
@@ -73,14 +79,14 @@ export default function Home() {
               width: "100%",
             }}
           >
-            <div style={{ flex: 1 }} className="bg-vs-dark">
+            <div style={{ flex: 1 }}>
               <MonacoEditor
                 isExecuting={isExecuting}
                 onExecute={handleOnExecute}
                 lang={ProgrammingLanguageOptions.JAVASCRIPT}
               />
             </div>
-            <div style={{ width: "30%" }} className="bg-vs-dark">
+            <div>
               <Xterm />
             </div>
           </Split>

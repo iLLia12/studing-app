@@ -1,6 +1,8 @@
 import Editor from "@monaco-editor/react";
 import { useRef, useState } from "react";
 import type { ProgrammingLanguageOptions } from "./types";
+import Image from "next/image";
+import PlayIcon from "../../components/svg/play/icon-2.svg";
 
 export default function MonacoEditor({
   lang,
@@ -25,14 +27,20 @@ export default function MonacoEditor({
   };
 
   function executeBtnText() {
-    return isExecuting ? "Executing..." : "Run";
+    return isExecuting ? (
+      "Executing..."
+    ) : (
+      <Image priority src={PlayIcon} height={30} width={30} alt="Run" />
+    );
   }
 
   return (
     <>
-      <div className="w-full flex justify-between h-12 dark-bg">
-        <div className="text-white">lang info</div>
-        <button className="bg-slate-400 text-center m-1 col-start-12 px-6">
+      <div className="w-full flex justify-between h-12 dark-bg text-white px-8">
+        <div className="text-neutral-300 text-xs py-4">
+          Running node.js v20.0.0
+        </div>
+        <button className="bg-green-400 text-center m-1 col-start-12 px-6 rounded-sm">
           {executeBtnText()}
         </button>
       </div>
