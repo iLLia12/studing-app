@@ -23,8 +23,28 @@ export default function Home() {
     console.log("preSize", preSize);
   }
 
-  function handleOnExecute(code: string) {
+  async function handleOnExecute(code: string) {
+    code =
+      'package main\n import "fmt"\n func main() { fmt.Println("Hello, Go!") }\n';
+
     console.log("The code is being executed: ", code);
+    await fetch("http://localhost:8080/execute", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        code,
+        lang: "go",
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data: ", data);
+      })
+      .catch((e) => {
+        console.log("Error: ", e.message);
+      });
   }
 
   return (
