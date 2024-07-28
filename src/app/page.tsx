@@ -26,6 +26,7 @@ export default function Home() {
   }
 
   async function handleOnExecute(code: string) {
+    setIsExecuting(true);
     code =
       'package main\n import "fmt"\n func main() { fmt.Println("Hello, Go!") }\n';
 
@@ -51,6 +52,7 @@ export default function Home() {
       .catch((e) => {
         console.log("Error: ", e.message);
       });
+    setIsExecuting(false);
   }
 
   return (
@@ -105,14 +107,14 @@ export default function Home() {
               width: "100%",
             }}
           >
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 10 }}>
               <MonacoEditor
                 isExecuting={isExecuting}
                 onExecute={handleOnExecute}
                 lang={ProgrammingLanguageOptions.JAVASCRIPT}
               />
             </div>
-            <div>
+            <div style={{ flex: 1 }}>
               <Xterm ref={xtermRef} />
             </div>
           </Split>

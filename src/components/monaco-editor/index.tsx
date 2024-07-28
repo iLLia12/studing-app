@@ -19,7 +19,6 @@ export default function MonacoEditor({
     editor: editor.IStandaloneCodeEditor,
     monaco: any
   ) {
-    console.log("editor: ", editor);
     editor.focus();
     editorRef.current = editor;
   }
@@ -40,9 +39,9 @@ export default function MonacoEditor({
     );
   }
 
-  useEffect(() => {
-    editorRef.current?.focus();
-  }, [editorRef.current]);
+  function executeBtnColor() {
+    return isExecuting ? "bg-red-400" : "bg-green-400";
+  }
 
   return (
     <div className="h-screen" onKeyDown={handleKeyDown}>
@@ -50,7 +49,9 @@ export default function MonacoEditor({
         <div className="text-neutral-300 text-xs py-4">
           Running node.js v20.0.0
         </div>
-        <button className="bg-green-400 text-center m-1 col-start-12 px-6 rounded-sm">
+        <button
+          className={`${executeBtnColor()} text-center m-1 col-start-12 px-6 rounded-sm`}
+        >
           {executeBtnText()}
         </button>
       </div>
