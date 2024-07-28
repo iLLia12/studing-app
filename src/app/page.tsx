@@ -8,13 +8,15 @@ import GolangIcon from "../components/svg/golang/icon-2.svg";
 import PythonIcon from "../components/svg/python/icon-3.svg";
 import JavaScriptIcon from "../components/svg/js/icon-1.svg";
 import JavaIcon from "../components/svg/java/icon-1.svg";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 
 //const heigth = "50px";
 
 export default function Home() {
   const [isExecuting, setIsExecuting] = useState(false);
+  const xtermRef = useRef<null | HTMLDivElement>(null);
+
   function handleOnChange(
     preSize: number,
     nextSize: number,
@@ -41,6 +43,10 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => {
         console.log("data: ", data);
+        //@ts-ignore
+        xtermRef.current?.push(`$ ${data}`);
+        //@ts-ignore
+        xtermRef.current?.push("\r\n");
       })
       .catch((e) => {
         console.log("Error: ", e.message);
@@ -107,7 +113,7 @@ export default function Home() {
               />
             </div>
             <div>
-              <Xterm />
+              <Xterm ref={xtermRef} />
             </div>
           </Split>
         </div>

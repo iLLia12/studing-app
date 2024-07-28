@@ -19,3 +19,12 @@
 .dark-bg-normal {
   background: var(--vs-dark-bg-thr);
 }
+.w-split-pane {
+  background: var(--vs-dark-bg);
+}
+
+.w-split-vertical > .w-split-line-bar div::after,
+.w-split-horizontal > .w-split-line-bar div::after {
+  background: var(--vs-dark-bg-sec) !important;
+  width: 5px !important;
+}

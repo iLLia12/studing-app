@@ -1,29 +1,46 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, forwardRef, useImperativeHandle } from "react";
 import { Terminal } from "@xterm/xterm";
 import "../../../node_modules/@xterm/xterm/css/xterm.css";
 import "./xterm.css";
 
-function Xterminal() {
+const XTerminal = forwardRef(function Xterminal(props, ref) {
+  const terminal = useRef<Terminal | null>(null);
   useEffect(() => {
+    terminal.current = new Terminal({
+      theme: {
+        background: "#1e1e1e",
+      },
+    });
     const term = document.getElementById("terminal");
     if (term) {
-      const terminal = new Terminal({
-        theme: {
-          background: "#1e1e1e",
-        },
-      });
-      terminal.open(term);
-      terminal.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $");
-      terminal.write("\n");
-      terminal.write("\r");
-      terminal.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
+      terminal.current.open(term);
+      terminal.current.write("Golang v1.2");
+      terminal.current.write("\r\n");
+      terminal.current.write("\r\n");
       return () => {
-        terminal.dispose();
+        terminal.current?.dispose();
       };
     }
   }, []);
-  return <div id="terminal" className="xterm"></div>;
-}
 
-export default Xterminal;
+  useImperativeHandle(ref, () => {
+    return {
+      push(str: string) {
+        console.log("str: ", str);
+        terminal.current?.write(str);
+      },
+    };
+  });
+
+  return (
+    <div
+      id="terminal"
+      {...props}
+      className="xterm"
+      style={{ padding: "20px" }}
+    ></div>
+  );
+});
+
+export default XTerminal;

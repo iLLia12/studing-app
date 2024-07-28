@@ -1,5 +1,6 @@
 import Editor from "@monaco-editor/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { editor } from "monaco-editor";
 import type { ProgrammingLanguageOptions } from "./types";
 import Image from "next/image";
 import PlayIcon from "../../components/svg/play/icon-2.svg";
@@ -13,8 +14,13 @@ export default function MonacoEditor({
   onExecute: (code: string) => void;
   isExecuting: boolean;
 }) {
-  const editorRef = useRef(null);
-  function handleEditorDidMount(editor: any, monaco: any) {
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+  function handleEditorDidMount(
+    editor: editor.IStandaloneCodeEditor,
+    monaco: any
+  ) {
+    console.log("editor: ", editor);
+    editor.focus();
     editorRef.current = editor;
   }
 
@@ -34,6 +40,10 @@ export default function MonacoEditor({
     );
   }
 
+  useEffect(() => {
+    editorRef.current?.focus();
+  }, [editorRef.current]);
+
   return (
     <div className="h-screen" onKeyDown={handleKeyDown}>
       <div className="w-full flex justify-between h-12 dark-bg text-white px-8">
@@ -45,7 +55,6 @@ export default function MonacoEditor({
         </button>
       </div>
       <Editor
-        height="100%"
         className="border-0"
         theme="vs-dark"
         defaultLanguage={lang}
