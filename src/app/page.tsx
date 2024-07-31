@@ -11,26 +11,12 @@ import JavaIcon from "../components/svg/java/icon-1.svg";
 import { useRef, useState } from "react";
 import Image from "next/image";
 
-//const heigth = "50px";
-
 export default function Home() {
   const [isExecuting, setIsExecuting] = useState(false);
   const xtermRef = useRef<null | HTMLDivElement>(null);
 
-  function handleOnChange(
-    preSize: number,
-    nextSize: number,
-    paneNumber: number
-  ) {
-    console.log("preSize", preSize);
-  }
-
   async function handleOnExecute(code: string) {
     setIsExecuting(true);
-    code =
-      'package main\n import "fmt"\n func main() { fmt.Println("Hello, Go!") }\n';
-
-    console.log("The code is being executed: ", code);
     await fetch("http://localhost:8080/execute", {
       method: "POST",
       headers: {
@@ -101,7 +87,6 @@ export default function Home() {
         <div className="w-full">
           <Split
             lineBar
-            onDragEnd={handleOnChange}
             style={{
               height: "100%",
               width: "100%",
@@ -111,7 +96,7 @@ export default function Home() {
               <MonacoEditor
                 isExecuting={isExecuting}
                 onExecute={handleOnExecute}
-                lang={ProgrammingLanguageOptions.JAVASCRIPT}
+                lang={ProgrammingLanguageOptions.GO}
               />
             </div>
             <div style={{ flex: 1 }}>
