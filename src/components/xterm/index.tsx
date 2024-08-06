@@ -27,7 +27,6 @@ const XTerminal = forwardRef(function Xterminal(props, ref) {
   useImperativeHandle(ref, () => {
     return {
       push(str: string) {
-        console.log("str: ", str);
         terminal.current?.write(str);
       },
     };

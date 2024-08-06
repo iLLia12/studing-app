@@ -11,9 +11,17 @@ import JavaIcon from "../components/svg/java/icon-1.svg";
 import { useRef, useState } from "react";
 import Image from "next/image";
 
+const langToIconMap = {
+  [ProgrammingLanguageOptions.GO]: GolangIcon,
+  [ProgrammingLanguageOptions.PYTHON]: PythonIcon,
+  [ProgrammingLanguageOptions.JAVASCRIPT]: JavaScriptIcon,
+  [ProgrammingLanguageOptions.JAVA]: JavaIcon,
+};
+
 export default function Home() {
   const [isExecuting, setIsExecuting] = useState(false);
   const xtermRef = useRef<null | HTMLDivElement>(null);
+  const [lang, setLang] = useState(ProgrammingLanguageOptions.GO);
 
   async function handleOnExecute(code: string) {
     setIsExecuting(true);
@@ -24,16 +32,15 @@ export default function Home() {
       },
       body: JSON.stringify({
         code,
-        lang: "go",
+        lang: lang,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("data: ", data);
         //@ts-ignore
         xtermRef.current?.push(`$ ${data}`);
         //@ts-ignore
-        xtermRef.current?.push("\r\n");
+        xtermRef.current?.push("\r");
       })
       .catch((e) => {
         console.log("Error: ", e.message);
@@ -46,7 +53,20 @@ export default function Home() {
       <div className={`w-full flex h-[calc(100vh-50px)]`}>
         <div className="min-w-20 dark-bg-sec">
           <div className="w-full grid grid-rows-12 h-full vs-dark-bg pt-1">
-            <button className="dark-bg-normal text-center rounded m-1 flex justify-center items-center transition ease-in-out duration-200 shadow-stone-700 shadow-inner">
+            {Object.values(ProgrammingLanguageOptions).map(
+              (lang: ProgrammingLanguageOptions) => (
+                <button className="dark-bg-normal text-center rounded m-1 flex justify-center items-center transition ease-in-out duration-200 shadow-stone-700 shadow-inner">
+                  <Image
+                    priority
+                    src={langToIconMap[lang]}
+                    height={33}
+                    width={33}
+                    alt={lang}
+                  />
+                </button>
+              )
+            )}
+            {/* <button className="dark-bg-normal text-center rounded m-1 flex justify-center items-center transition ease-in-out duration-200 shadow-stone-700 shadow-inner">
               <Image
                 priority
                 src={GolangIcon}
@@ -81,7 +101,7 @@ export default function Home() {
                 width={30}
                 alt="Java"
               />
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="w-full">
@@ -98,6 +118,7 @@ export default function Home() {
                 onExecute={handleOnExecute}
                 lang={ProgrammingLanguageOptions.GO}
               />
+              <div className="fixed h-36 bg-black z-30">dsadasdsada</div>
             </div>
             <div style={{ flex: 1 }}>
               <Xterm ref={xtermRef} />

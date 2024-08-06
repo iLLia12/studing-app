@@ -1,8 +1,10 @@
 import Image from "next/image";
 import ProgrammingLangIcon from "../../components/svg/programming-lang/icon-1.svg";
 import WhiteboardIcon from "../../components/svg/whiteboard/icon-3.svg";
+import { useState } from "react";
 
 export default function Footer() {
+  const [isLangOptionsOpen, openIsLangOptionsOpen] = useState(false);
   return (
     <div className={`fixed w-full bg-zinc-900 h-[50px] dark-bg-sec`}>
       <div className="w-full grid grid-cols-12 gap-2 h-full">
