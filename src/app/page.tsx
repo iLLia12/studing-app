@@ -10,6 +10,7 @@ import JavaScriptIcon from "../components/svg/js/icon-1.svg";
 import JavaIcon from "../components/svg/java/icon-1.svg";
 import { useRef, useState } from "react";
 import Image from "next/image";
+import { WriteToTerminalHandler } from "../components/xterm/";
 
 const langToIconMap = {
   [ProgrammingLanguageOptions.GO]: GolangIcon,
@@ -20,32 +21,36 @@ const langToIconMap = {
 
 export default function Home() {
   const [isExecuting, setIsExecuting] = useState(false);
-  const xtermRef = useRef<null | HTMLDivElement>(null);
+  const xtermRef = useRef<WriteToTerminalHandler | null>(null);
   const [lang, setLang] = useState(ProgrammingLanguageOptions.GO);
 
   async function handleOnExecute(code: string) {
     setIsExecuting(true);
-    await fetch("http://localhost:8080/execute", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        code,
-        lang: lang,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        //@ts-ignore
-        xtermRef.current?.push(`$ ${data}`);
-        //@ts-ignore
-        xtermRef.current?.push("\r");
-      })
-      .catch((e) => {
-        console.log("Error: ", e.message);
+    try {
+      const res = await fetch("http://localhost:8080/execute", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code,
+          lang: lang,
+        }),
       });
+      const { output } = await res.json();
+      xtermRef.current?.push(output);
+      xtermRef.current?.push(">>>");
+    } catch (e) {
+      console.log(e);
+    }
     setIsExecuting(false);
+  }
+
+  function activeBtn(l: ProgrammingLanguageOptions) {
+    if (l == lang) {
+      return "shadow-stone-600 shadow-inner";
+    }
+    return "";
   }
 
   return (
@@ -55,12 +60,18 @@ export default function Home() {
           <div className="w-full grid grid-rows-12 h-full vs-dark-bg pt-1">
             {Object.values(ProgrammingLanguageOptions).map(
               (lang: ProgrammingLanguageOptions) => (
-                <button className="dark-bg-normal text-center rounded m-1 flex justify-center items-center transition ease-in-out duration-200 shadow-stone-700 shadow-inner">
+                <button
+                  key={lang}
+                  className={
+                    `dark-bg-normal text-center rounded m-1 flex justify-center items-center transition ease-in-out duration-200 ` +
+                    activeBtn(lang)
+                  }
+                >
                   <Image
                     priority
                     src={langToIconMap[lang]}
-                    height={33}
-                    width={33}
+                    height={23}
+                    width={23}
                     alt={lang}
                   />
                 </button>
