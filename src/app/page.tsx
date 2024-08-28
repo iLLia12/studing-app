@@ -39,7 +39,6 @@ export default function Home() {
       });
       const { output } = await res.json();
       xtermRef.current?.push(output);
-      xtermRef.current?.push(">>>");
     } catch (e) {
       console.log(e);
     }
@@ -127,12 +126,12 @@ export default function Home() {
               <MonacoEditor
                 isExecuting={isExecuting}
                 onExecute={handleOnExecute}
-                lang={ProgrammingLanguageOptions.GO}
+                lang={lang}
               />
               <div className="fixed h-36 bg-black z-30">dsadasdsada</div>
             </div>
             <div style={{ flex: 1 }}>
-              <Xterm ref={xtermRef} />
+              <Xterm ref={xtermRef} lang={lang} />
             </div>
           </Split>
         </div>

@@ -46,9 +46,7 @@ export default function MonacoEditor({
   return (
     <div className="h-screen" onKeyDown={handleKeyDown}>
       <div className="w-full flex justify-between h-12 dark-bg text-white px-8">
-        <div className="text-neutral-300 text-xs py-4">
-          Running node.js v20.0.0
-        </div>
+        <div className="text-neutral-300 text-xs py-4">Running {lang}</div>
         <button
           className={`${executeBtnColor()} text-center m-1 col-start-12 px-6 rounded-sm`}
         >

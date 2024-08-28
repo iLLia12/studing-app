@@ -3,8 +3,11 @@ import { useRef, useEffect, forwardRef, useImperativeHandle } from "react";
 import { Terminal } from "@xterm/xterm";
 import "../../../node_modules/@xterm/xterm/css/xterm.css";
 import "./xterm.css";
+import { ProgrammingLanguageOptions } from "../../components/monaco-editor/types";
 
-type Props = {};
+type Props = {
+  lang: ProgrammingLanguageOptions;
+};
 
 export type WriteToTerminalHandler = {
   push: (str: string) => void;
@@ -27,9 +30,9 @@ const XTerminal = forwardRef<WriteToTerminalHandler, Props>(function Xterminal(
     const term = document.getElementById("terminal");
     if (term) {
       terminal.current.open(term);
-      terminal.current.write("Golang v1.2");
+      terminal.current.write(props.lang);
       terminal.current.write("\r\n");
-      terminal.current.write("\n\x1b[32m>>>\x1b[0m ");
+      terminal.current?.write("\n\x1b[32m>>>\x1b[0m ");
       return () => {
         terminal.current?.dispose();
       };
@@ -40,6 +43,7 @@ const XTerminal = forwardRef<WriteToTerminalHandler, Props>(function Xterminal(
     return {
       push(str: string) {
         terminal.current?.write(str);
+        terminal.current?.write("\n\x1b[32m>>>\x1b[0m ");
       },
     };
   });
