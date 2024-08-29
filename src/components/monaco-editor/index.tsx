@@ -44,7 +44,7 @@ export default function MonacoEditor({
   }
 
   return (
-    <div className="h-screen" onKeyDown={handleKeyDown}>
+    <div className="h-[calc(100vh-50px)]" onKeyDown={handleKeyDown}>
       <div className="w-full flex justify-between h-12 dark-bg text-white px-8">
         <div className="text-neutral-300 text-xs py-4">Running {lang}</div>
         <button

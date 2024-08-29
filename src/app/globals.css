@@ -8,6 +8,11 @@
   --vs-dark-bg-thr: #202020;
 }
 
+html,
+body {
+  background: var(--vs-dark-bg);
+}
+
 .dark-bg {
   background: var(--vs-dark-bg);
 }

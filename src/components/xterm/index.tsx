@@ -23,6 +23,7 @@ const XTerminal = forwardRef<WriteToTerminalHandler, Props>(function Xterminal(
       fontFamily: "monospace",
       fontSize: 12,
       lineHeight: 1.2,
+      rows: 34, // <--- scroll issue
       theme: {
         background: "#1e1e1e",
       },
@@ -48,14 +49,7 @@ const XTerminal = forwardRef<WriteToTerminalHandler, Props>(function Xterminal(
     };
   });
 
-  return (
-    <div
-      id="terminal"
-      {...props}
-      className="xterm"
-      style={{ padding: "20px" }}
-    ></div>
-  );
+  return <div id="terminal" {...props} className="xterm"></div>;
 });
 
 export default XTerminal;

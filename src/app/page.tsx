@@ -128,9 +128,8 @@ export default function Home() {
                 onExecute={handleOnExecute}
                 lang={lang}
               />
-              <div className="fixed h-36 bg-black z-30">dsadasdsada</div>
             </div>
-            <div style={{ flex: 1 }}>
+            <div>
               <Xterm ref={xtermRef} lang={lang} />
             </div>
           </Split>
